@@ -7,7 +7,6 @@ from quixstreams.models.serializers.quix import QuixDeserializer, QuixTimeseries
 
 load_dotenv();
 
-# get the environment variable value or default to False
 USE_LOCAL_KAFKA=os.getenv("use_local_kafka", False)
 
 app = get_app(use_local_kafka=USE_LOCAL_KAFKA)
@@ -15,26 +14,38 @@ app = get_app(use_local_kafka=USE_LOCAL_KAFKA)
 input_topic = app.topic(os.environ["input"])
 output_topic = app.topic(os.environ["output"])
 
-# Create a StreamingDataFrame instance
-# StreamingDataFrame is a primary interface to define the message processing pipeline
 sdf = app.dataframe(topic=input_topic)
 
-# Print the incoming messages
-# sdf = sdf.update(lambda value, ctx: print('Received a message:', value))
+def to_metrics(row):    
+    metrics = [
+                {
+                    "name": "trades.volume",
+                    'type': "count",
+                    'value': row['v'],
+                    'timestamp': row['t'],
+                    "interval.ms": 1000,
+                    "attributes": {
+                        "symbol": row['s']
+                    }
+                },
+                {
+                    "name": "trades.price",
+                    'type' : "gauge",
+                    'value' : row['p'],
+                    'timestamp' : row['t'],
+                    "interval.ms": 10000,
+                    "attributes": {
+                        "symbol": row['s']
+                    }
+                }         
+            ]
+    return metrics
 
-sdf['symbol'] = sdf['s']
-sdf['timestamp'] = sdf['t']
-sdf['price']  = sdf['p']
-sdf['volume']  = sdf['v']
-
-sdf = sdf[["symbol", "timestamp", "price", "volume"]]
+sdf= sdf.apply(to_metrics,  expand=False)
 
 sdf = sdf.update(lambda value: print('Producing a message:', value))
 
 sdf = sdf.to_topic(output_topic)
 
-
-
 if __name__ == "__main__":
-    # Run the streaming application 
     app.run(sdf)
