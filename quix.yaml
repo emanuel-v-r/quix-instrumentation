@@ -51,10 +51,10 @@ deployments:
         description: Name of the output topic to write to.
         required: false
         value: metrics
-  - name: new-relic-kafka-connect 2
+  - name: new-relic-kafka-connect
     application: new-relic-kafka-connect
     deploymentType: Service
-    version: c0429a1a42e03968f6837bbb77cf1d3b91a02ade
+    version: daa05f997603583f7405b261a8e93ac16b4c1627
     resources:
       cpu: 200
       memory: 500
