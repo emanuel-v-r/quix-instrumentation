@@ -10,6 +10,13 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Finance feeder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "finance-feeder/main.py",
+            "console": "integratedTerminal"
         }
     ]
 }
