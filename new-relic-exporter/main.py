@@ -7,7 +7,6 @@ client = qx.QuixStreamingClient()
 
 # Use Input / Output topics to stream data in or out of your service
 consumer_topic = client.get_topic_consumer(os.environ["input"])
-producer_topic = client.get_topic_producer(os.environ["output"])
 
 
 import requests
@@ -17,7 +16,7 @@ import time
 url = "https://metric-api.newrelic.com/metric/v1"
 headers = {
     "Content-Type": "application/json",
-    "Api-Key": "NEW_RELIC_LICENSE_KEY"
+    "Api-Key": NRAK-IA821CAJ8G6LAFVBTHCBDQZ3XH1Y"
 }
 
 data = [{
