@@ -74,9 +74,6 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
             -H "Content-Type: application/json" \
             "${Quix__Portal__Api}/${Quix__Workspace__Id}/topics/${topic_name}")
 
-        # Trim leading/trailing whitespace
-        result=$(echo "$result" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-
         topicStatus=$(echo "$result" | jq -r '.status')
     }
 
