@@ -73,7 +73,7 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
             -H "Content-Type: application/json" \
             "${Quix__Portal__Api}/${Quix__Workspace__Id}/topics/${topic_name}")
 
-        echo $result    
+        echo "$result"
         topicStatus=$(echo "$result" | jq -r '.status')
         echo "$topicStatus"
     }
