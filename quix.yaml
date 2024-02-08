@@ -9,7 +9,7 @@ deployments:
   - name: finance-feeder
     application: finance-feeder
     deploymentType: Service
-    version: f531ca989b74e1630e810af9b5302401238526be
+    version: 94b6e924d1a5d6321ff0877dcc3060e266559654
     resources:
       cpu: 200
       memory: 500
