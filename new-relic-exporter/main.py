@@ -16,7 +16,7 @@ import time
 url = "https://metric-api.newrelic.com/metric/v1"
 headers = {
     "Content-Type": "application/json",
-    "Api-Key": NRAK-IA821CAJ8G6LAFVBTHCBDQZ3XH1Y"
+    "Api-Key": "NRAK-IA821CAJ8G6LAFVBTHCBDQZ3XH1"
 }
 
 data = [{
