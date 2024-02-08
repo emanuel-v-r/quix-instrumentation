@@ -1,2 +1,2 @@
-websockets
+websocket
 python-dotenv
