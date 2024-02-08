@@ -72,6 +72,8 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
             -H "Authorization: Bearer ${Quix__Sdk__Token}" \
             -H "Content-Type: application/json" \
             "${Quix__Portal__Api}/${Quix__Workspace__Id}/topics/${topic_name}")
+
+        echo $result    
         topicStatus=$(echo "$result" | jq -r '.status')
         echo "$topicStatus"
     }
