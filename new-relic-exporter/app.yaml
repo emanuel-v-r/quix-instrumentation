@@ -1,0 +1,11 @@
+name: new-relic-exporter
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: This is the input topic to read data from
+    defaultValue: ''
+    required: true
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py
