@@ -9,7 +9,7 @@ variables:
   - name: output
     inputType: OutputTopic
     description: Name of the output topic to write to.
-    defaultValue: metrics
+    defaultValue: app-metrics
     required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
