@@ -31,6 +31,26 @@ deployments:
         description: ''
         required: true
         value: trades
+  - name: metrics-adapter
+    application: metrics-adapter
+    deploymentType: Service
+    version: 7e552da8de76876555484ea489badc3e8e778516
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: trades
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: metrics
 
 # This section describes the Topics of the data pipeline
 topics:
