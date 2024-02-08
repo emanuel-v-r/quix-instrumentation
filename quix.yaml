@@ -9,13 +9,23 @@ deployments:
   - name: finance-feeder
     application: finance-feeder
     deploymentType: Service
-    version: 9ffaf434393a6395e11241aee4812ed792c647f1
+    version: 1bc3f5fcd719fad6b330f7a375f7eee96310f08d
     resources:
       cpu: 200
       memory: 500
       replicas: 1
     desiredStatus: Running
-    variables: []
+    variables:
+      - name: FINHUB_ENDPOINT
+        inputType: FreeText
+        description: Endpoint of Finhub
+        required: true
+        value: wss://ws.finnhub.io
+      - name: FINHUB_TOKEN
+        inputType: FreeText
+        description: Finhub Token
+        required: true
+        value: cn22fv1r01qmg1p4cp9gcn22fv1r01qmg1p4cpa0
 
 # This section describes the Topics of the data pipeline
 topics: []
