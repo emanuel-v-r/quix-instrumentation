@@ -1,20 +1,40 @@
+
 import os
-from quixstreams import Application, State
+import quixstreams as qx
+from dotenv import load_dotenv
+from app_factory import get_app
 from quixstreams.models.serializers.quix import QuixDeserializer, QuixTimeseriesSerializer
 
+load_dotenv();
 
-app = Application.Quix("transformation-v1", auto_offset_reset="latest")
+# get the environment variable value or default to False
+USE_LOCAL_KAFKA=os.getenv("use_local_kafka", False)
 
-input_topic = app.topic(os.environ["input"], value_deserializer=QuixDeserializer())
-output_topic = app.topic(os.environ["output"], value_serializer=QuixTimeseriesSerializer())
+app = get_app(use_local_kafka=USE_LOCAL_KAFKA)
 
-sdf = app.dataframe(input_topic)
+input_topic = app.topic(os.environ["input"])
+output_topic = app.topic(os.environ["output"])
 
-# Here put transformation logic.
+# Create a StreamingDataFrame instance
+# StreamingDataFrame is a primary interface to define the message processing pipeline
+sdf = app.dataframe(topic=input_topic)
 
-sdf = sdf.update(lambda row: print(row))
+# Print the incoming messages
+# sdf = sdf.update(lambda value, ctx: print('Received a message:', value))
+
+sdf['symbol'] = sdf['s']
+sdf['timestamp'] = sdf['t']
+sdf['price']  = sdf['p']
+sdf['volume']  = sdf['v']
+
+sdf = sdf[["symbol", "timestamp", "price", "volume"]]
+
+sdf = sdf.update(lambda value: print('Producing a message:', value))
 
 sdf = sdf.to_topic(output_topic)
 
+
+
 if __name__ == "__main__":
+    # Run the streaming application 
     app.run(sdf)

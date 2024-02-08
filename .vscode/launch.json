@@ -17,6 +17,13 @@
             "request": "launch",
             "program": "finance-feeder/main.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Metrics adapter",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "metrics-adapter/main.py",
+            "console": "integratedTerminal"
         }
     ]
 }
