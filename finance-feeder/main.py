@@ -27,11 +27,11 @@ producer = app.get_producer()
     
 def on_message(ws, message):    
     message_obj = json.loads(message)
+    print("Producing: "+ message)
 
     data_array = message_obj.get('data', [])
     
     for item in data_array:
-        print("Producing: "+ item)
         serialized_value = serializer(value=item, ctx=SerializationContext(topic=topic.name))
         
         try:
