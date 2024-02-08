@@ -97,7 +97,9 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
             echo "Checking topic again $topic_name $topic_display_name"
 
             # Wait for the topic to be created
-            while [ "$(get_topic_status "$topic_name")" != "Ready" ]; do
+            while [ "$topic_status" != "Ready"]; do
+                topic_status=$(get_topic_status "$topic_name")
+                echo "FSTATUS: $topic_status"
                 echo "Waiting for topic $topic_display_name to be created..."
                 sleep 5
             done
