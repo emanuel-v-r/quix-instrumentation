@@ -15,6 +15,11 @@ import time
 
 consumer = client.get_topic_consumer(consumer_topic)
 
+
+
+consumer.on_stream_received = 
+
+
 url = "https://metric-api.newrelic.com/metric/v1"
 headers = {
     "Content-Type": "application/json",
