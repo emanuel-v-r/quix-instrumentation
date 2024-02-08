@@ -68,6 +68,9 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
 
     get_topic_status() {
         local topic_name=$1
+
+        echo "trying to get status for topic $topic_name"
+
         result=$(curl -s -X GET \
             -H "Authorization: Bearer ${Quix__Sdk__Token}" \
             -H "Content-Type: application/json" \
@@ -75,8 +78,8 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
 
         # Trim leading/trailing whitespace
         result=$(echo "$result" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
-        
-        echo "$result"
+
+        echo "Result: $result"
         topicStatus=$(echo "$result" | jq -r '.status')
         echo "$topicStatus"
     }
