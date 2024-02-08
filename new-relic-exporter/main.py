@@ -13,6 +13,8 @@ import requests
 import json
 import time
 
+client.get_topic_consumer(consumer_topic)
+
 url = "https://metric-api.newrelic.com/metric/v1"
 headers = {
     "Content-Type": "application/json",
