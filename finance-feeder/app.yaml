@@ -4,11 +4,16 @@ variables:
   - name: FINHUB_ENDPOINT
     inputType: FreeText
     description: Endpoint of Finhub
-    defaultValue: 'wss://ws.finnhub.io'
+    defaultValue: wss://ws.finnhub.io
     required: true
   - name: FINHUB_TOKEN
     inputType: FreeText
     description: Finhub Token
+    required: true
+  - name: TRADES_TOPIC
+    inputType: OutputTopic
+    description: ''
+    defaultValue: trades
     required: true
 dockerfile: dockerfile
 runEntryPoint: main.py
