@@ -74,8 +74,15 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
             -H "Content-Type: application/json" \
             "${Quix__Portal__Api}/${Quix__Workspace__Id}/topics/${topic_name}")
 
-        topicStatus=$(echo "$result" | jq -r '.status')
-    }
+        topicStatus=$(echo "$result" | jq -r '.status' 2>&1)
+
+        # Check if jq command was successful
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to parse JSON response: $result" >&2
+            echo "This was the topic: $topic_name with status $topicStatus"
+            return 1
+        fi
+     }
 
     create_and_wait_for_topic() {
         local topic_name=$1
