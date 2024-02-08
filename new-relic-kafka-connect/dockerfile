@@ -5,15 +5,15 @@ ENV SCALA_VERSION=2.13
 
 COPY src/scripts/install-kafka.sh /bin/
 
-RUN apk update \
-  && apk add --no-cache bash curl jq \
-  && chmod a+x /bin/install-kafka.sh \
-  && /bin/install-kafka.sh \
-  && apk del curl jq \
-  && apk add --no-cache bash openjdk17-jre \
-  && wget https://client.hub.confluent.io/confluent-hub-client-latest.tar.gz \
-  && mkdir confluent-hub \
-  && tar -xvzf confluent-hub-client-latest.tar.gz -C confluent-hub 
+RUN apk update
+RUN apk add --no-cache bash curl jq
+RUN chmod a+x /bin/install-kafka.sh
+RUN /bin/install-kafka.sh 
+RUN apk del curl jq
+RUN apk add --no-cache bash openjdk17-jre
+RUN wget https://client.hub.confluent.io/confluent-hub-client-latest.tar.gz
+RUN mkdir confluent-hub
+RUN tar -xvzf confluent-hub-client-latest.tar.gz -C confluent-hub 
 
 FROM alpine:3.19
 
