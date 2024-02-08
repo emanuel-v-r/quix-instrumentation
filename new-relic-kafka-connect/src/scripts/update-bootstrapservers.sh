@@ -5,7 +5,7 @@ source /usr/bin/get-quix-broker-certs.sh
 
 echo "Bootstrap servers: $BOOTSTRAP_SERVERS"
 echo "Kafka Username: $kafkaUsername"
-echo "Kafka Password: ***"
+echo "Kafka Password: $kafkaPassword"
 echo "Kafka Security Mode: $kafkaSecurityMode"
 echo "Kafka SASL Mechanism: $kafkaSaslMechanism"
 echo "Quix Broker Truststore File: $quixBrokerTruststoreFile"
@@ -68,46 +68,28 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
 
     get_topic_status() {
         local topic_name=$1
-
         result=$(curl -s -X GET \
             -H "Authorization: Bearer ${Quix__Sdk__Token}" \
             -H "Content-Type: application/json" \
             "${Quix__Portal__Api}/${Quix__Workspace__Id}/topics/${topic_name}")
-
-        topicStatus=$(echo "$result" | jq -r '.status' 2>&1)
-
-        # Check if jq command was successful
-        if [ $? -ne 0 ]; then
-            echo "Error: Failed to parse JSON response: $result" >&2
-            echo "This was the topic: $topic_name with status $topicStatus"
-            return 1
-        fi
-     }
+        topicStatus=$(echo "$result" | jq -r '.status')
+        echo "$topicStatus"
+    }
 
     create_and_wait_for_topic() {
         local topic_name=$1
         local topic_display_name=$2
 
         # Check if the topic needs to be created
-        echo "Checking topic $topic_name $topic_display_name"
-
         topic_status=$(get_topic_status "$topic_name")
         echo "Topic status for $topic_display_name: $topic_status"
-        
+
         if [ "$topic_status" != "Ready" ]; then
             echo "Topic $topic_display_name not found. Creating topic..."
             create_topic "$topic_name"
 
-            echo "Checking topic again $topic_name $topic_display_name"
-
             # Wait for the topic to be created
-            while true; do
-                topic_status=$(get_topic_status "$topic_name")
-                echo "FSTATUS: $topic_status"
-                if [ "$topic_status" = "Ready" ]; then
-                    echo "Topic $topic_display_name is now ready."
-                    break
-                fi
+            while [ "$(get_topic_status "$topic_name")" != "Ready" ]; do
                 echo "Waiting for topic $topic_display_name to be created..."
                 sleep 5
             done
@@ -124,10 +106,6 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
     create_and_wait_for_topic "$kafkaStatusStatusTopicName" "$kafkaStatusStorageTopic" &
     pid3=$!
 
-    if [ -n "$input" ]; then
-        create_and_wait_for_topic "${input}" "${Quix__Workspace__Id}-${input}" &
-    fi
-
     # Wait for all the topics to be created
     wait "$pid1" "$pid2" "$pid3"
 
@@ -138,3 +116,5 @@ fi
 
 
 echo "Bootstrap servers updated ($BOOTSTRAP_SERVERS) successfully in $file_path"
+
+cat "$file_path"
