@@ -54,7 +54,7 @@ deployments:
   - name: new-relic-kafka-connect 2
     application: new-relic-kafka-connect
     deploymentType: Service
-    version: b281aef217f68d36972ddc175888fa9ee3d6d5e1
+    version: e11d30ef85ee3b89741ccfbc0187af102a9586a2
     resources:
       cpu: 200
       memory: 500
@@ -65,7 +65,7 @@ deployments:
         inputType: InputTopic
         description: This is the input topic from which to sink from
         required: true
-        value: metrics
+        value: app-metrics
       - name: CONNECT_OFFSET_STORAGE_TOPIC
         inputType: FreeText
         description: Topic name to use for storing kafka connect offsets
@@ -127,3 +127,10 @@ topics:
       retentionInMinutes: 1440
       retentionInBytes: 52428800
       cleanupPolicy: Compact
+  - name: app-metrics
+    persisted: false
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
