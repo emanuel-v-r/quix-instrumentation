@@ -85,12 +85,16 @@ if [ "$CONNECT_MODE" == "distributed" ]; then
         local topic_display_name=$2
 
         # Check if the topic needs to be created
+        echo "Checking topic $topic_name $topic_display_name"
+
         topic_status=$(get_topic_status "$topic_name")
         echo "Topic status for $topic_display_name: $topic_status"
 
         if [ "$topic_status" != "Ready" ]; then
             echo "Topic $topic_display_name not found. Creating topic..."
             create_topic "$topic_name"
+
+            echo "Checking topic again $topic_name $topic_display_name"
 
             # Wait for the topic to be created
             while [ "$(get_topic_status "$topic_name")" != "Ready" ]; do
