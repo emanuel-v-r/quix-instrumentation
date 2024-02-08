@@ -1,0 +1,21 @@
+# Quix Project Descriptor
+# This file describes the data pipeline and configuration of resources of a Quix Project.
+
+metadata:
+  version: 1.0
+
+# This section describes the Deployments of the data pipeline
+deployments:
+  - name: finance-feeder
+    application: finance-feeder
+    deploymentType: Service
+    version: 9ffaf434393a6395e11241aee4812ed792c647f1
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables: []
+
+# This section describes the Topics of the data pipeline
+topics: []
