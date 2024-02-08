@@ -28,4 +28,11 @@ deployments:
         value: cn22fv1r01qmg1p4cp9gcn22fv1r01qmg1p4cpa0
 
 # This section describes the Topics of the data pipeline
-topics: []
+topics:
+  - name: trades
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
