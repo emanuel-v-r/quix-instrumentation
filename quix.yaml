@@ -54,7 +54,7 @@ deployments:
   - name: new-relic-kafka-connect
     application: new-relic-kafka-connect
     deploymentType: Service
-    version: 1d0a7008bf4d873cc8cee0bf41fe35b392bec0d6
+    version: 2bb4a8c41461b0a356cd5816a8d84eeef82e2b30
     resources:
       cpu: 200
       memory: 500
