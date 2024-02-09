@@ -111,6 +111,21 @@ deployments:
         description: New relic key
         required: true
         secretKey: newrelic_key
+  - name: new-relic-exporter 2
+    application: new-relic-exporter
+    deploymentType: Service
+    version: f324917a24da5b3ae67599a8fde3c3492be7ec5a
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic to read data from
+        required: true
+        value: app-metrics
 
 # This section describes the Topics of the data pipeline
 topics:
