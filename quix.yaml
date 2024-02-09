@@ -50,7 +50,7 @@ deployments:
         inputType: OutputTopic
         description: Name of the output topic to write to.
         required: false
-        value: metrics
+        value: app-metrics
   - name: new-relic-kafka-connect
     application: new-relic-kafka-connect
     deploymentType: Service
