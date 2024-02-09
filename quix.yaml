@@ -34,7 +34,7 @@ deployments:
   - name: metrics-adapter
     application: metrics-adapter
     deploymentType: Service
-    version: 7e552da8de76876555484ea489badc3e8e778516
+    version: e56feab12deb1d042d23f7022235ad59fa49479f
     resources:
       cpu: 200
       memory: 500
@@ -86,6 +86,21 @@ deployments:
         description: The confluent hub (https://www.confluent.io/hub, free connectors only for now) kafka connector to use
         required: true
         value: newrelic/newrelic-kafka-connector:2.3.2
+  - name: new-relic-exporter
+    application: new-relic-exporter
+    deploymentType: Service
+    version: f324917a24da5b3ae67599a8fde3c3492be7ec5a
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic to read data from
+        required: true
+        value: app-metrics
 
 # This section describes the Topics of the data pipeline
 topics:
