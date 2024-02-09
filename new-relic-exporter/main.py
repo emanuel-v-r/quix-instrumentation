@@ -7,6 +7,7 @@ import logging
 import sys
 from dotenv import load_dotenv
 import uuid
+import time
 
 load_dotenv()
 
@@ -25,7 +26,18 @@ async def process_message(payload):
                     "Content-Type": "application/json",
                     "Api-Key": metrics_key
                 }
-                async with session.post(url, headers=headers, data=payload) as response:
+                # Parse JSON string payload into Python object
+                payload_obj = json.loads(payload)
+                # Update timestamp for each metric
+                current_timestamp = int(time())
+                for item in payload_obj:
+                    for metric in item.get("metrics", []):
+                        # big hammer, but we have huge lag for some reason
+                        metric["timestamp"] = current_timestamp
+                # Convert Python object back to JSON string
+                updated_payload = json.dumps(payload_obj)
+
+                async with session.post(url, headers=headers, data=updated_payload) as response:
                     logger.info("Response code: %s", response.status)
                     logger.info("Response content: %s", await response.text())
             else:
