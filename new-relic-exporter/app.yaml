@@ -6,6 +6,16 @@ variables:
     description: This is the input topic to read data from
     defaultValue: ''
     required: true
+  - name: NEWRELIC_ENDPOINT
+    inputType: FreeText
+    description: New relic endpoint
+    defaultValue: 'https://metric-api.eu.newrelic.com/metric/v1'
+    required: true
+  - name: NEWRELIC_TOKEN
+    inputType: Secret
+    description: New relic token
+    defaultValue: 'newrelic_token'
+    required: true
 dockerfile: dockerfile
 runEntryPoint: main.py
 defaultFile: main.py

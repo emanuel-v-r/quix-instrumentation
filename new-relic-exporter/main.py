@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv();
 
+metrics_endpoint= os.environ["NEWRELIC_ENDPOINT"]
+metrics_key= os.environ["NEWRELIC_KEY"]
+
 def main():
       app = Application.Quix(
             consumer_group='consumer',
@@ -18,10 +21,10 @@ def main():
                 msg = consumer.poll(timeout=1.0)
                 if msg is not None:     
                   
-                    url = "https://metric-api.eu.newrelic.com/metric/v1"
+                    url = metrics_endpoint
                     headers = {
                         "Content-Type": "application/json",
-                        "Api-Key": "eu01xx1c97e581b6f132199c52e95a49af05NRAL"
+                        "Api-Key": metrics_key
                     }
                     
                     response = requests.post(url, headers=headers, data=msg.value(), verify=False)
