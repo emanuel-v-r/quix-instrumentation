@@ -1,6 +1,8 @@
 import logging
 import os
 from typing import Optional
+import uuid
+
 
 from quixstreams import Application
 
@@ -21,7 +23,7 @@ def get_app(consumer_group: Optional[str]="consumer", use_local_kafka: Optional[
     else:
         logger.info(f"Creating Quix app for Quix Platform")
         app = Application.Quix(
-            consumer_group=consumer_group,
+            consumer_group=str(uuid.uuid4()),
             auto_offset_reset="latest",
             auto_create_topics=True,  # Quix app has an option to auto create topics
         )
