@@ -6,31 +6,6 @@ metadata:
 
 # This section describes the Deployments of the data pipeline
 deployments:
-  - name: finance-feeder
-    application: finance-feeder
-    deploymentType: Service
-    version: b2e85f15d65cd8ebc3661768a6b26814a851b09e
-    resources:
-      cpu: 200
-      memory: 500
-      replicas: 1
-    desiredStatus: Running
-    variables:
-      - name: FINHUB_ENDPOINT
-        inputType: FreeText
-        description: Endpoint of Finhub
-        required: true
-        value: wss://ws.finnhub.io
-      - name: FINHUB_TOKEN
-        inputType: FreeText
-        description: Finhub Token
-        required: true
-        value: cn22fv1r01qmg1p4cp9gcn22fv1r01qmg1p4cpa0
-      - name: TRADES_TOPIC
-        inputType: OutputTopic
-        description: ''
-        required: true
-        value: trades
   - name: metrics-adapter
     application: metrics-adapter
     deploymentType: Service
@@ -101,6 +76,31 @@ deployments:
         description: This is the input topic to read data from
         required: true
         value: app-metrics
+  - name: finance-feeder
+    application: finance-feeder
+    deploymentType: Service
+    version: 8baa2cb1863f91fa899978bd594607e89321b8ba
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: FINHUB_ENDPOINT
+        inputType: FreeText
+        description: Endpoint of Finhub
+        required: true
+        value: wss://ws.finnhub.io
+      - name: FINHUB_TOKEN
+        inputType: Secret
+        description: Finhub Token
+        required: true
+        secretKey: finhub_token
+      - name: TRADES_TOPIC
+        inputType: OutputTopic
+        description: ''
+        required: true
+        value: trades
 
 # This section describes the Topics of the data pipeline
 topics:
