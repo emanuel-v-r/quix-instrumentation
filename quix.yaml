@@ -34,7 +34,7 @@ deployments:
   - name: metrics-adapter
     application: metrics-adapter
     deploymentType: Service
-    version: 7e552da8de76876555484ea489badc3e8e778516
+    version: e56feab12deb1d042d23f7022235ad59fa49479f
     resources:
       cpu: 200
       memory: 500
