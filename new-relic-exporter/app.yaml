@@ -4,12 +4,12 @@ variables:
   - name: input
     inputType: InputTopic
     description: This is the input topic to read data from
-    defaultValue: ''
+    defaultValue: app-metrics
     required: true
   - name: NEWRELIC_ENDPOINT
     inputType: FreeText
     description: New relic endpoint
-    defaultValue: 'https://metric-api.eu.newrelic.com/metric/v1'
+    defaultValue: https://metric-api.eu.newrelic.com/metric/v1
     required: true
   - name: NEWRELIC_KEY
     inputType: Secret
