@@ -111,6 +111,26 @@ deployments:
         description: New relic key
         required: true
         secretKey: newrelic_key
+  - name: metrics-adapter 2
+    application: metrics-adapter
+    deploymentType: Service
+    version: 7a69fbaf7f0ab89144c02ac200176c391e28be09
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: trades
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: app-metrics
 
 # This section describes the Topics of the data pipeline
 topics:
