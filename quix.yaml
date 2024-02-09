@@ -79,7 +79,7 @@ deployments:
   - name: finance-feeder
     application: finance-feeder
     deploymentType: Service
-    version: e821db47782866df49ac54a91d4044dbd1e07878
+    version: 8baa2cb1863f91fa899978bd594607e89321b8ba
     resources:
       cpu: 200
       memory: 500
@@ -92,10 +92,10 @@ deployments:
         required: true
         value: wss://ws.finnhub.io
       - name: FINHUB_TOKEN
-        inputType: FreeText
+        inputType: Secret
         description: Finhub Token
         required: true
-        value: cn22fv1r01qmg1p4cp9gcn22fv1r01qmg1p4cpa0
+        secretKey: finhub_token
       - name: TRADES_TOPIC
         inputType: OutputTopic
         description: ''
