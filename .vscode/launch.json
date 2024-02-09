@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Finance feeder",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "finance-feeder/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Metrics adapter",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "metrics-adapter/main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "New relic exporter",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "new-relic-exporter/main.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}

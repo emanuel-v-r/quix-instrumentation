@@ -1,0 +1,21 @@
+name: new-relic-exporter
+language: python
+variables:
+  - name: input
+    inputType: InputTopic
+    description: This is the input topic to read data from
+    defaultValue: app-metrics
+    required: true
+  - name: NEWRELIC_ENDPOINT
+    inputType: FreeText
+    description: New relic endpoint
+    defaultValue: https://metric-api.eu.newrelic.com/metric/v1
+    required: true
+  - name: NEWRELIC_KEY
+    inputType: Secret
+    description: New relic key
+    defaultValue: 'newrelic_key'
+    required: true
+dockerfile: dockerfile
+runEntryPoint: main.py
+defaultFile: main.py

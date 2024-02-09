@@ -1,0 +1,130 @@
+# Quix Project Descriptor
+# This file describes the data pipeline and configuration of resources of a Quix Project.
+
+metadata:
+  version: 1.0
+
+# This section describes the Deployments of the data pipeline
+deployments:
+  - name: metrics-adapter
+    application: metrics-adapter
+    deploymentType: Service
+    version: e56feab12deb1d042d23f7022235ad59fa49479f
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: {{ DEPLOYMENTS_STATE }}
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: trades
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: app-metrics
+  - name: new-relic-kafka-connect
+    application: new-relic-kafka-connect
+    deploymentType: Service
+    version: 5a59298505ec67b82b276ab6d2b0824c31c5d6ff
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: {{ DEPLOYMENTS_STATE }}
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic from which to sink from
+        required: true
+        value: app-metrics
+      - name: CONNECT_OFFSET_STORAGE_TOPIC
+        inputType: FreeText
+        description: Topic name to use for storing kafka connect offsets
+        required: true
+        value: connect-offsets-sink
+      - name: CONNECT_CONFIG_STORAGE_TOPIC
+        inputType: FreeText
+        description: Topic name to use for storing connector and task configurations for kafka connect
+        required: true
+        value: connect-configs-sink
+      - name: CONNECT_STATUS_STORAGE_TOPIC
+        inputType: FreeText
+        description: Topic name to use for storing statuses for kafka connect
+        required: true
+        value: connect-status-sink
+      - name: CONNECTOR_NAME
+        inputType: FreeText
+        description: The confluent hub (https://www.confluent.io/hub, free connectors only for now) kafka connector to use
+        required: true
+        value: newrelic/newrelic-kafka-connector:2.3.2
+  - name: finance-feeder
+    application: finance-feeder
+    deploymentType: Service
+    version: 8baa2cb1863f91fa899978bd594607e89321b8ba
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: {{ DEPLOYMENTS_STATE }}
+    variables:
+      - name: FINHUB_ENDPOINT
+        inputType: FreeText
+        description: Endpoint of Finhub
+        required: true
+        value: wss://ws.finnhub.io
+      - name: FINHUB_TOKEN
+        inputType: Secret
+        description: Finhub Token
+        required: true
+        secretKey: finhub_token
+      - name: TRADES_TOPIC
+        inputType: OutputTopic
+        description: ''
+        required: true
+        value: trades
+  - name: new-relic-exporter
+    application: new-relic-exporter
+    deploymentType: Service
+    version: ad03a3fa6b367b58c17f6fad0d9745bc7f6ab767
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: {{ DEPLOYMENTS_STATE }}
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: This is the input topic to read data from
+        required: true
+        value: app-metrics
+      - name: NEWRELIC_ENDPOINT
+        inputType: FreeText
+        description: New relic endpoint
+        required: true
+        value: https://metric-api.eu.newrelic.com/metric/v1
+      - name: NEWRELIC_KEY
+        inputType: Secret
+        description: New relic key
+        required: true
+        secretKey: newrelic_key
+
+# This section describes the Topics of the data pipeline
+topics:
+  - name: trades
+    persisted: false
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
+  - name: app-metrics
+    persisted: false
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
