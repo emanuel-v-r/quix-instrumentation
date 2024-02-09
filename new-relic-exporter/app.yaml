@@ -11,10 +11,10 @@ variables:
     description: New relic endpoint
     defaultValue: 'https://metric-api.eu.newrelic.com/metric/v1'
     required: true
-  - name: NEWRELIC_TOKEN
+  - name: NEWRELIC_KEY
     inputType: Secret
-    description: New relic token
-    defaultValue: 'newrelic_token'
+    description: New relic key
+    defaultValue: 'newrelic_key'
     required: true
 dockerfile: dockerfile
 runEntryPoint: main.py
