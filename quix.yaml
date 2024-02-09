@@ -86,7 +86,7 @@ deployments:
         description: ''
         required: true
         value: trades
-  - name: new-relic-exporter 2
+  - name: new-relic-exporter
     application: new-relic-exporter
     deploymentType: Service
     version: 43f99be14538008caaad82c177131eefd7de4d20
