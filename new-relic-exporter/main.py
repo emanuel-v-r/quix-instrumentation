@@ -2,36 +2,55 @@ from quixstreams import Application
 import os
 import requests
 from dotenv import load_dotenv
+import json
+import logging
+import sys
 
-load_dotenv();
+load_dotenv()
 
-metrics_endpoint= os.environ["NEWRELIC_ENDPOINT"]
-metrics_key= os.environ["NEWRELIC_KEY"]
+# Logging Configuration
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+metrics_endpoint = os.environ.get("NEWRELIC_ENDPOINT")
+metrics_key = os.environ.get("NEWRELIC_KEY")
 
 def main():
-      
-      app = Application.Quix(
+    try:
+        app = Application.Quix(
             consumer_group='consumer',
             auto_offset_reset="earliest",
-            auto_create_topics=True,  # Quix app has an option to auto create topics
+            auto_create_topics=True,
         )
-      
-      with app.get_consumer() as consumer:
-            consumer.subscribe([os.environ["input"]])
+
+        with app.get_consumer() as consumer:
+            consumer.subscribe([os.environ.get("input")])
+            logger.info("Waiting for messages...")
             while True:
                 msg = consumer.poll(timeout=1.0)
-                if msg is not None:     
-                  
-                    url = metrics_endpoint
-                    headers = {
-                        "Content-Type": "application/json",
-                        "Api-Key": metrics_key
-                    }
-                    
-                    response = requests.post(url, headers=headers, data=msg.value(), verify=False)
-                    
-                    print("Response code:", response.status_code)
-                    print("Response content:", response.content)
+                if msg is not None:
+                    try:
+                        payload = msg.value().decode('utf-8')
+                        logger.info("Received message: %s", payload)
+
+                        if metrics_endpoint and metrics_key:
+                            url = metrics_endpoint
+                            headers = {
+                                "Content-Type": "application/json",
+                                "Api-Key": metrics_key
+                            }
+
+                            response = requests.post(url, headers=headers, data=payload)
+                            logger.info("Response code: %s", response.status_code)
+                            logger.info("Response content: %s", response.content)
+                        else:
+                            logger.error("Metrics endpoint or key not found in environment variables.")
+                    except Exception as e:
+                        logger.error("Error processing message: %s", str(e))
+    except KeyboardInterrupt:
+        logger.info("Received keyboard interrupt. Exiting...")
+    except Exception as e:
+        logger.error("An error occurred: %s", str(e))
 
 if __name__ == "__main__":
     main()
