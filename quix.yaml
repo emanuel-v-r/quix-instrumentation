@@ -114,3 +114,17 @@ deployments:
 
 # This section describes the Topics of the data pipeline
 topics:
+  - name: trades
+    persisted: false
+    configuration:
+      partitions: 10
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
+  - name: app-metrics
+    persisted: false
+    configuration:
+      partitions: 10
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
