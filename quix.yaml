@@ -125,7 +125,7 @@ topics:
   - name: kafka-connect-status
     persisted: false
     configuration:
-      partitions: 1
+      partitions: 10
       replicationFactor: 2
       retentionInMinutes: 1440
       retentionInBytes: 52428800
