@@ -101,6 +101,31 @@ deployments:
         description: This is the input topic to read data from
         required: true
         value: app-metrics
+  - name: finance-feeder 2
+    application: finance-feeder
+    deploymentType: Service
+    version: e821db47782866df49ac54a91d4044dbd1e07878
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: FINHUB_ENDPOINT
+        inputType: FreeText
+        description: Endpoint of Finhub
+        required: true
+        value: wss://ws.finnhub.io
+      - name: FINHUB_TOKEN
+        inputType: FreeText
+        description: Finhub Token
+        required: true
+        value: cn22fv1r01qmg1p4cp9gcn22fv1r01qmg1p4cpa0
+      - name: TRADES_TOPIC
+        inputType: OutputTopic
+        description: ''
+        required: true
+        value: trades
 
 # This section describes the Topics of the data pipeline
 topics:
