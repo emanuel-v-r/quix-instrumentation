@@ -89,7 +89,7 @@ deployments:
   - name: new-relic-exporter
     application: new-relic-exporter
     deploymentType: Service
-    version: ad03a3fa6b367b58c17f6fad0d9745bc7f6ab767
+    version: 7a69fbaf7f0ab89144c02ac200176c391e28be09
     resources:
       cpu: 200
       memory: 500
