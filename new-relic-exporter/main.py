@@ -9,6 +9,7 @@ metrics_endpoint= os.environ["NEWRELIC_ENDPOINT"]
 metrics_key= os.environ["NEWRELIC_KEY"]
 
 def main():
+      
       app = Application.Quix(
             consumer_group='consumer',
             auto_offset_reset="earliest",
@@ -31,5 +32,6 @@ def main():
                     
                     print("Response code:", response.status_code)
                     print("Response content:", response.content)
+
 if __name__ == "__main__":
     main()
