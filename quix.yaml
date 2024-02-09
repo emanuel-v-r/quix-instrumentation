@@ -9,7 +9,7 @@ deployments:
   - name: metrics-adapter
     application: metrics-adapter
     deploymentType: Service
-    version: 7a69fbaf7f0ab89144c02ac200176c391e28be09
+    version: c70a1389ba63d3f15ab979f6a3e31d2f365d6ef5
     resources:
       cpu: 200
       memory: 500
@@ -89,7 +89,7 @@ deployments:
   - name: new-relic-exporter
     application: new-relic-exporter
     deploymentType: Service
-    version: ed4d722ab216f5f63ffd114f708bb7cbbc9550a5
+    version: c70a1389ba63d3f15ab979f6a3e31d2f365d6ef5
     resources:
       cpu: 200
       memory: 500
