@@ -24,7 +24,8 @@ def main():
         )
 
         with app.get_consumer() as consumer:
-            consumer.subscribe([os.environ.get("input")])
+            input_topic = app.topic(os.environ["input"])
+            consumer.subscribe([input_topic])
             logger.info("Waiting for messages...")
             while True:
                 msg = consumer.poll(timeout=1.0)
