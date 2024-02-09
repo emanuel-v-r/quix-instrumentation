@@ -19,7 +19,7 @@ def main():
     try:
         app = Application.Quix(
             consumer_group='consumer',
-            auto_offset_reset="earliest",
+            auto_offset_reset="latest",
             auto_create_topics=True,
         )
 

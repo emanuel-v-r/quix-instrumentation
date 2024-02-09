@@ -4,6 +4,8 @@ import quixstreams as qx
 from dotenv import load_dotenv
 from app_factory import get_app
 from quixstreams.models.serializers.quix import QuixDeserializer, QuixTimeseriesSerializer
+import time
+
 
 load_dotenv();
 
@@ -17,12 +19,15 @@ output_topic = app.topic(os.environ["output"])
 sdf = app.dataframe(topic=input_topic)
 
 def to_metrics(row):    
+    
+    timestamp = int(time.time())
+    
     metrics = [{      
             "metrics":[{
                 "name": "trades.volume",
                 'type': "count",
                 'value': row['v'],
-                'timestamp': row['t'],
+                'timestamp': timestamp,
                 "interval.ms": 1000,
                 "attributes": {
                     "symbol": row['s']
@@ -32,10 +37,10 @@ def to_metrics(row):
                 "name": "trades.price",
                 'type' : "gauge",
                 'value' : row['p'],
-                'timestamp' : row['t'],
-                "interval.ms": 10000,
+                'timestamp' : timestamp,
                 "attributes": {
-                    "symbol": row['s']
+                    "symbol": row['s'],
+                    'source.timestamp' : row['t'],
                 }
             } ]        
             }]

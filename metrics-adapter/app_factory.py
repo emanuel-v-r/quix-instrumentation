@@ -13,7 +13,7 @@ def get_app(consumer_group: Optional[str]="consumer", use_local_kafka: Optional[
         app = Application(
             broker_address=os.environ["KAFKA_BROKER_ADDRESS"],
             consumer_group=consumer_group,
-            auto_offset_reset="earliest",
+            auto_offset_reset="latest",
             consumer_extra_config={"allow.auto.create.topics": "true"},
             producer_extra_config={"allow.auto.create.topics": "true"},
         )
@@ -22,7 +22,7 @@ def get_app(consumer_group: Optional[str]="consumer", use_local_kafka: Optional[
         logger.info(f"Creating Quix app for Quix Platform")
         app = Application.Quix(
             consumer_group=consumer_group,
-            auto_offset_reset="earliest",
+            auto_offset_reset="latest",
             auto_create_topics=True,  # Quix app has an option to auto create topics
         )
     
