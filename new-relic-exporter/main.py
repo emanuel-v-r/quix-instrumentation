@@ -1,11 +1,6 @@
-import quixstreams as qx
 from quixstreams import Application
 import os
-
 import requests
-import json
-import time
-
 from dotenv import load_dotenv
 
 load_dotenv();
