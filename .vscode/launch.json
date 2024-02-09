@@ -24,6 +24,13 @@
             "request": "launch",
             "program": "metrics-adapter/main.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "New relic exporter",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "new-relic-exporter/main.py",
+            "console": "integratedTerminal"
         }
     ]
 }

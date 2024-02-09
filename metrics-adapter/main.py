@@ -17,28 +17,28 @@ output_topic = app.topic(os.environ["output"])
 sdf = app.dataframe(topic=input_topic)
 
 def to_metrics(row):    
-    metrics = [
-                {
-                    "name": "trades.volume",
-                    'type': "count",
-                    'value': row['v'],
-                    'timestamp': row['t'],
-                    "interval.ms": 1000,
-                    "attributes": {
-                        "symbol": row['s']
-                    }
-                },
-                {
-                    "name": "trades.price",
-                    'type' : "gauge",
-                    'value' : row['p'],
-                    'timestamp' : row['t'],
-                    "interval.ms": 10000,
-                    "attributes": {
-                        "symbol": row['s']
-                    }
-                }         
-            ]
+    metrics = [{      
+            "metrics":[{
+                "name": "trades.volume",
+                'type': "count",
+                'value': row['v'],
+                'timestamp': row['t'],
+                "interval.ms": 1000,
+                "attributes": {
+                    "symbol": row['s']
+                }
+            },
+            {
+                "name": "trades.price",
+                'type' : "gauge",
+                'value' : row['p'],
+                'timestamp' : row['t'],
+                "interval.ms": 10000,
+                "attributes": {
+                    "symbol": row['s']
+                }
+            } ]        
+            }]
     return metrics
 
 sdf= sdf.apply(to_metrics,  expand=False)
