@@ -7,8 +7,9 @@ variables:
     defaultValue: wss://ws.finnhub.io
     required: true
   - name: FINHUB_TOKEN
-    inputType: FreeText
+    inputType: Secret
     description: Finhub Token
+    defaultValue: finhub_token
     required: true
   - name: TRADES_TOPIC
     inputType: OutputTopic
