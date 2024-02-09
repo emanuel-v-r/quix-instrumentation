@@ -117,14 +117,14 @@ topics:
   - name: trades
     persisted: false
     configuration:
-      partitions: 10
+      partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: app-metrics
     persisted: false
     configuration:
-      partitions: 10
+      partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
