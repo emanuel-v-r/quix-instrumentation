@@ -76,7 +76,7 @@ deployments:
         description: This is the input topic to read data from
         required: true
         value: app-metrics
-  - name: finance-feeder 2
+  - name: finance-feeder
     application: finance-feeder
     deploymentType: Service
     version: e821db47782866df49ac54a91d4044dbd1e07878
